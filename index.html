@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Story Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="theme-switch">
+        <i class="fas fa-sun"></i>
+        <label class="switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider round"></span>
+        </label>
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="language-selector">
+        <select id="language-select">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="hi">हिंदी</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>AI Story Generator</h1>
+            <p>Create unique stories with the power of AI</p>
+        </header>
+        
+        <main>
+            <div class="story-form">
+                <div class="input-group">
+                    <label for="prompt">Story Prompt:</label>
+                    <div class="prompt-container">
+                        <textarea id="prompt" placeholder="Enter your story idea..."></textarea>
+                        <button id="suggest-prompt" class="icon-btn" title="Get prompt suggestions">
+                            <i class="fas fa-lightbulb"></i>
+                        </button>
+                    </div>
+                    <div id="prompt-suggestions" class="suggestions-panel hidden">
+                        <!-- Suggestions will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Genre:</label>
+                    <div class="genre-buttons">
+                        <button class="genre-btn" data-genre="adventure">Adventure</button>
+                        <button class="genre-btn" data-genre="fantasy">Fantasy</button>
+                        <button class="genre-btn" data-genre="sci-fi">Sci-Fi</button>
+                        <button class="genre-btn" data-genre="romance">Romance</button>
+                        <button class="genre-btn" data-genre="horror">Horror</button>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label>Style:</label>
+                    <div class="style-buttons">
+                        <button class="style-btn" data-style="funny">Funny</button>
+                        <button class="style-btn" data-style="dramatic">Dramatic</button>
+                        <button class="style-btn" data-style="mysterious">Mysterious</button>
+                        <button class="style-btn" data-style="poetic">Poetic</button>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Story Length:</label>
+                    <div class="length-control">
+                        <input type="range" id="story-length" min="100" max="1000" step="100" value="500">
+                        <span id="length-value">500 words</span>
+                    </div>
+                </div>
+                
+                <div class="template-section">
+                    <label>Story Templates:</label>
+                    <div class="template-list">
+                        <button class="template-btn" data-template="hero-journey">Hero's Journey</button>
+                        <button class="template-btn" data-template="mystery">Mystery</button>
+                        <button class="template-btn" data-template="love-story">Love Story</button>
+                        <button class="template-btn" data-template="fairy-tale">Fairy Tale</button>
+                    </div>
+                </div>
+                
+                <button id="generate-btn">Generate Story</button>
+            </div>
+            
+            <div class="story-output">
+                <div class="story-header">
+                    <h2 id="story-title">Your Story</h2>
+                    <div class="story-meta">
+                        <span id="word-count">0 words</span>
+                        <span id="reading-time">0 min read</span>
+                        <div class="story-rating">
+                            <i class="fas fa-star" data-rating="1"></i>
+                            <i class="fas fa-star" data-rating="2"></i>
+                            <i class="fas fa-star" data-rating="3"></i>
+                            <i class="fas fa-star" data-rating="4"></i>
+                            <i class="fas fa-star" data-rating="5"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-content-wrapper">
+                    <div id="story-content" class="story-content">
+                        Your story will appear here...
+                    </div>
+                    <div id="story-illustration" class="story-illustration hidden">
+                        <!-- AI-generated illustration will appear here -->
+                    </div>
+                </div>
+
+                <div class="story-controls">
+                    <div class="primary-controls">
+                        <button id="copy-btn"><i class="fas fa-copy"></i> Copy</button>
+                        <button id="download-btn"><i class="fas fa-download"></i> Download</button>
+                        <button id="save-btn"><i class="fas fa-save"></i> Save</button>
+                        <button id="pdf-btn"><i class="fas fa-file-pdf"></i> Export PDF</button>
+                        <button id="speak-btn"><i class="fas fa-volume-up"></i> Narrate</button>
+                        <button id="illustrate-btn"><i class="fas fa-image"></i> Illustrate</button>
+                    </div>
+                    
+                    <div class="share-controls">
+                        <button class="share-btn" data-platform="twitter"><i class="fab fa-twitter"></i></button>
+                        <button class="share-btn" data-platform="facebook"><i class="fab fa-facebook"></i></button>
+                        <button class="share-btn" data-platform="linkedin"><i class="fab fa-linkedin"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="saved-stories">
+                <h3>Saved Stories</h3>
+                <div id="saved-stories-list"></div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
